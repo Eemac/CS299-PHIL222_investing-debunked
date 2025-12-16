@@ -1,0 +1,19 @@
+/* Masthead = same container sizing as .main, but its own block */
+.masthead{
+  padding: 22px;              /* similar interior spacing */
+  margin-bottom: 18px;        /* space between masthead block and main block */
+}
+
+/* Remove the “nested card” look from earlier */
+.masthead{
+  background: rgba(233,239,233,.06);         /* same as .main */
+  border: 1px solid rgba(255,255,255,.10);   /* same as .main */
+  box-shadow: var(--shadow-soft);            /* same as .main */
+  backdrop-filter: blur(12px);               /* same as .main */
+  border-radius: var(--radius-xl);           /* same as .main */
+}
+
+
+.html{
+  scroll-behavior: smooth;
+}

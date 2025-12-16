@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Insight Dashboard Template THAT nita HAS CHANGED</title>
+  <title>Insight Dashboard Template</title>
   <style>
     :root{
       /* Palette inspired by your references (soft paper + bold accent tiles) */
@@ -33,8 +33,18 @@
 
       --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
       --sans: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
-    }
 
+      
+    }
+    
+    :root{
+  --ticker-h: 56px; /* adjust if your ticker is taller/shorter */
+}
+
+    :root{
+  --ui-gap: 22px; /* same gap used everywhere */
+}
+    
     *{ box-sizing:border-box; }
     html, body{ height:100%; }
     body{
@@ -48,13 +58,12 @@
     }
 
     /* ====== App Shell ====== */
-    .app{
-      min-height:100%;
-      display:grid;
-      grid-template-columns: var(--sidebar-w) 1fr;
-      gap: 22px;
-      padding: 22px;
-      padding-right: calc(22px + min(var(--toc-w), 28vw)); /* reserve space for floating TOC */
+  .app{
+    min-height: 100%;
+    padding: var(--ui-gap);
+    padding-top: var(--ui-gap); /* ticker already handles its own sticky space */
+    padding-right: calc(var(--ui-gap) * 2 + min(var(--toc-w), 28vw));
+  }
     }
 
     /* Left icon rail (inspired by “Account / Wallet” UI) */
@@ -118,8 +127,8 @@
     }
     .topbar h1{
       margin:0;
-      font-size: clamp(1.05rem, 1.6vw, 1.4rem);
-      letter-spacing: .5px;
+      font-size: clamp(1.6rem, 2.4vw, 2.1rem); /* ~50% larger */
+      letter-spacing: .6px;
       text-transform: uppercase;
       opacity:.92;
     }
@@ -154,9 +163,83 @@
       margin-inline: 4px;
     }
 
+      
+    /* ====== More Header Styles ====== */   
+      .page-title{
+        margin: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+
+        text-transform: uppercase;
+        letter-spacing: .6px;
+      }
+
+      /* Kicker stays the same */
+      .page-title__kicker{
+        font-family: var(--mono);
+        font-size: .9rem;
+        padding: 8px 12px;
+        border-radius: 999px;
+
+        background: rgba(255,255,255,.06);
+        border: 1px solid rgba(255,255,255,.12);
+        color: rgba(233,239,233,.92);
+        box-shadow: inset 0 1px 0 rgba(255,255,255,.08);
+      }
+
+      /* Main title */
+      .page-title__main{
+        display: flex;
+        align-items: center;
+        gap: 10px;
+
+        font-size: clamp(1.9rem, 3.0vw, 3.0rem);
+        font-weight: 900;
+        letter-spacing: .8px;
+        color: rgba(233,239,233,.95);
+        line-height: 1.05;
+      }
+
+      /* Byline — same style, ~75% smaller */
+      .page-title__byline{
+        font-size: clamp(1rem, 2.1vw, 2.15rem); /* ~75% of main */
+        font-weight: 700;
+        letter-spacing: .7px;
+        color: rgba(233,239,233,.65);
+      }
+
+/* Optional: subtle highlight bar behind part of the title */
+.page-title__main{
+  position: relative;
+}
+.page-title__main::after{
+  content: "";
+  position: absolute;
+  left: -6px;
+  right: -6px;
+  bottom: .14em;
+  height: .34em;
+  border-radius: 10px;
+  background: rgba(255,255,255,.05);
+  z-index: -1;
+}
+
+/* Mobile tightening */
+@media (max-width: 520px){
+  .page-title{
+    gap: 10px;
+  }
+  .page-title__kicker{
+    font-size: .8rem;
+    padding: 7px 10px;
+  }
+}
+    
     /* ====== Sections & Cards ====== */
     section{
-      scroll-margin-top: 24px;
+      scroll-margin-top: calc(var(--ticker-h, 56px) + 24px);
       margin-bottom: 18px;
     }
     .grid{
@@ -543,8 +626,8 @@
     /* ====== Floating TOC (right side) ====== */
     .toc{
       position:fixed;
-      top: 22px;
-      right: 22px;
+      top: calc(22px + var(--ticker-h));
+      right: var(--ui-gap);
       width: min(var(--toc-w), 28vw);
       max-height: calc(100dvh - 44px);
       overflow:auto;
@@ -611,55 +694,221 @@
       .kpi-band{ grid-template-columns: 1fr; }
       .kpi-big{ justify-self:start; }
     }
+    
+    
+    
+    
+    /* === Market Ticker (matches dark/glass aesthetic) === */
+.wsj-ticker{
+  position: sticky;
+  top: 0;
+  z-index: 999;
+  display: block;
+  align-items: center;
+
+  background: rgba(255,255,255,.05);
+  border-bottom: 1px solid rgba(255,255,255,.10);
+  box-shadow: 0 18px 50px rgba(0,0,0,.25);
+  backdrop-filter: blur(12px);
+}
+
+    .wsj-ticker{ min-height: var(--ticker-h); }
+    
+.wsj-ticker__mask{
+  overflow: hidden;
+  white-space: nowrap;
+  padding: 10px 14px;
+}
+
+.wsj-ticker__track{
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  padding-right: 12px;
+
+  will-change: transform;
+  animation: wsj-scroll 60s linear infinite;
+}
+
+.wsj-ticker:hover .wsj-ticker__track{
+  animation-play-state: paused;
+}
+
+@keyframes wsj-scroll{
+  from { transform: translateX(0); }
+  to   { transform: translateX(-100%); }
+}
+
+.wsj-ticker__item{
+  display: inline-flex;
+  align-items: baseline;
+  gap: 10px;
+
+  padding: 6px 10px;
+  border-radius: 999px;
+
+  background: rgba(255,255,255,.06);
+  border: 1px solid rgba(255,255,255,.12);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.10);
+
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  font-size: 0.86rem;
+  color: rgba(255,255,255,.92);
+}
+
+.wsj-ticker__item b{ font-weight: 900; letter-spacing: .2px; }
+.wsj-ticker__item i{ font-style: normal; font-weight: 700; opacity: .95; }
+.wsj-ticker__item em{ font-style: normal; font-weight: 900; }
+.wsj-ticker__item u{ text-decoration: none; font-weight: 900; }
+
+.wsj-ticker__item.up em,
+.wsj-ticker__item.up u{ color: #47d17a; }
+
+.wsj-ticker__item.down em,
+.wsj-ticker__item.down u{ color: #ff5a5a; }
+
+.wsj-ticker__dot{
+  opacity: .35;
+  padding: 0 2px;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+}
+
+.wsj-ticker__controls{
+  padding: 6px 10px;
+  border-left: 1px solid rgba(255,255,255,.10);
+  background: rgba(255,255,255,.03);
+  display: inline-flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.wsj-ticker__btn{
+  width: 32px;
+  height: 32px;
+  border-radius: 12px;
+  border: 1px solid rgba(255,255,255,.12);
+  background: rgba(255,255,255,.06);
+  color: rgba(255,255,255,.92);
+  cursor: pointer;
+  font-weight: 900;
+  line-height: 1;
+}
+
+.wsj-ticker__btn:hover{
+  background: rgba(255,255,255,.10);
+}
+
+/* If your layout uses a fixed topbar, this prevents overlap */
+body{ scroll-padding-top: 64px; }
+
+/* Respect reduced motion */
+@media (prefers-reduced-motion: reduce){
+  .wsj-ticker__track{ animation: none; }
+}
+    
+    
+    .masthead{
+  border-radius: var(--radius-xl);
+  background: rgba(255,255,255,.04);           /* dark grey glass */
+  border: 1px solid rgba(255,255,255,.10);
+  box-shadow: var(--shadow-soft);
+  backdrop-filter: blur(12px);
+
+  padding: 22px 22px 18px;
+  margin: 6px 0 18px;                          /* space below masthead */
+}
+
+/* Tighten title spacing inside the masthead */
+.masthead .page-title{
+  gap: 12px;
+}
+
+/* Make the byline sit a touch closer visually */
+.masthead .page-title__byline{
+  margin-top: 2px;
+}
+
+.masthead{
+  position: relative;
+  overflow: hidden;
+}
+.masthead::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  pointer-events:none;
+  background: radial-gradient(900px 260px at 20% 0%, rgba(255,255,255,.07), transparent 60%);
+}
+.masthead > *{ position: relative; }
+    
+    
+    
   </style>
 </head>
 
 <body>
+  <div id="page-top"></div>
+  
+  <div class="wsj-ticker" role="region" aria-label="Market ticker">
+  <div class="wsj-ticker__mask">
+    <div class="wsj-ticker__track">
+      <span class="wsj-ticker__item down"><b>AURORA FUT</b><i>48,818.00</i><em>-0.04%</em><u>▼</u></span>
+      <span class="wsj-ticker__item down"><b>IRONCAP 500</b><i>6,876.00</i><em>-0.07%</em><u>▼</u></span>
+      <span class="wsj-ticker__item down"><b>NEBULA TECH</b><i>25,308.75</i><em>-0.13%</em><u>▼</u></span>
+      <span class="wsj-ticker__item up"><b>STOXXORA 600</b><i>581.80</i><em>+0.06%</em><u>▲</u></span>
+      <span class="wsj-ticker__dot">•</span>
+      <span class="wsj-ticker__item up"><b>RIVERMINT BK</b><i>1,204.10</i><em>+0.22%</em><u>▲</u></span>
+      <span class="wsj-ticker__item down"><b>SKYLINE OIL</b><i>93.41</i><em>-0.58%</em><u>▼</u></span>
+      <span class="wsj-ticker__item up"><b>LATTICE AI</b><i>312.77</i><em>+1.14%</em><u>▲</u></span>
+      <span class="wsj-ticker__item down"><b>CIRRUS GOLD</b><i>2,044.30</i><em>-0.11%</em><u>▼</u></span>
+      <span class="wsj-ticker__item up"><b>HARBOR FX</b><i>101.92</i><em>+0.03%</em><u>▲</u></span>
+      <span class="wsj-ticker__dot">•</span>
+      <span class="wsj-ticker__item up"><b>POLARIS IND</b><i>8,402.55</i><em>+0.19%</em><u>▲</u></span>
+      <span class="wsj-ticker__item down"><b>EMBER RETAIL</b><i>144.09</i><em>-0.35%</em><u>▼</u></span>
+      <span class="wsj-ticker__item up"><b>QUANTUM RAIL</b><i>77.61</i><em>+0.41%</em><u>▲</u></span>
+    </div>
+
+    <!-- Duplicate for seamless loop -->
+    <div class="wsj-ticker__track" aria-hidden="true">
+      <span class="wsj-ticker__item down"><b>AURORA FUT</b><i>48,818.00</i><em>-0.04%</em><u>▼</u></span>
+      <span class="wsj-ticker__item down"><b>IRONCAP 500</b><i>6,876.00</i><em>-0.07%</em><u>▼</u></span>
+      <span class="wsj-ticker__item down"><b>NEBULA TECH</b><i>25,308.75</i><em>-0.13%</em><u>▼</u></span>
+      <span class="wsj-ticker__item up"><b>STOXXORA 600</b><i>581.80</i><em>+0.06%</em><u>▲</u></span>
+      <span class="wsj-ticker__dot">•</span>
+      <span class="wsj-ticker__item up"><b>RIVERMINT BK</b><i>1,204.10</i><em>+0.22%</em><u>▲</u></span>
+      <span class="wsj-ticker__item down"><b>SKYLINE OIL</b><i>93.41</i><em>-0.58%</em><u>▼</u></span>
+      <span class="wsj-ticker__item up"><b>LATTICE AI</b><i>312.77</i><em>+1.14%</em><u>▲</u></span>
+      <span class="wsj-ticker__item down"><b>CIRRUS GOLD</b><i>2,044.30</i><em>-0.11%</em><u>▼</u></span>
+      <span class="wsj-ticker__item up"><b>HARBOR FX</b><i>101.92</i><em>+0.03%</em><u>▲</u></span>
+      <span class="wsj-ticker__dot">•</span>
+      <span class="wsj-ticker__item up"><b>POLARIS IND</b><i>8,402.55</i><em>+0.19%</em><u>▲</u></span>
+      <span class="wsj-ticker__item down"><b>EMBER RETAIL</b><i>144.09</i><em>-0.35%</em><u>▼</u></span>
+      <span class="wsj-ticker__item up"><b>QUANTUM RAIL</b><i>77.61</i><em>+0.41%</em><u>▲</u></span>
+    </div>
+  </div>
+</div>
+  
+  
+  
+  
   <div class="app">
-    <!-- Left rail -->
-    <aside class="rail" aria-label="Primary navigation">
-      <div class="logo" title="Brand">◉</div>
-      <button aria-label="Dashboard" title="Dashboard">▦</button>
-      <button aria-label="Reports" title="Reports">⌁</button>
-      <button aria-label="Models" title="Models">∿</button>
-      <button aria-label="Settings" title="Settings">⚙︎</button>
-      <div class="spacer"></div>
-      <small>EN</small>
-    </aside>
 
-    <!-- Main paper -->
-    <main class="main" id="top">
-      <div class="topbar">
-        <h1>Your Insight Panel</h1>
+      <!-- Separate title block (same dimensions as main) -->
+      <header class="main masthead">
+        <h1 class="page-title">
+          <span class="page-title__kicker">Final Project</span>
 
-        <div class="caps">
-          <label class="cap" title="Workspace">
-            Workspace
-            <span class="divider"></span>
-            <select>
-              <option>Wallet</option>
-              <option>Account</option>
-              <option>Research</option>
-            </select>
-          </label>
+          <span class="page-title__main">
+            Investment Chatbot
+          </span>
 
-          <label class="cap" title="Date range">
-            Range
-            <span class="divider"></span>
-            <select>
-              <option>This Week</option>
-              <option>This Month</option>
-              <option>This Year</option>
-              <option>Custom…</option>
-            </select>
-          </label>
+          <span class="page-title__byline">Created by X</span>
+        </h1>
+      </header>
 
-          <div class="cap" title="Search">
-            ⌕ <input placeholder="Search sections…" aria-label="Search sections" />
-          </div>
-        </div>
-      </div>
-
+        <!-- Main paper -->
+      <main class="main">
+        
       <!-- SECTION: Overview -->
       <section id="overview">
         <div class="kpi-band">
@@ -1013,24 +1262,101 @@
       });
     });
 
-    // ===== Floating TOC active section highlight =====
-    const tocLinks = Array.from(document.querySelectorAll(".toc a[href^='#']"))
-      .filter(a => a.getAttribute("href") !== "#top");
-    const sections = tocLinks
-      .map(a => document.querySelector(a.getAttribute("href")))
-      .filter(Boolean);
+// ===== Floating TOC active section highlight (stable, consolidated) =====
+const tocLinks = Array.from(document.querySelectorAll(".toc a[href^='#']"))
+  .filter(a => !["#top", "#page-top"].includes(a.getAttribute("href")));
 
-    const obs = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if(entry.isIntersecting){
-          tocLinks.forEach(a => a.classList.remove("active"));
-          const link = tocLinks.find(a => a.getAttribute("href") === "#" + entry.target.id);
-          if(link) link.classList.add("active");
-        }
+const sections = tocLinks
+  .map(a => document.querySelector(a.getAttribute("href")))
+  .filter(Boolean);
+
+function getTopOffset() {
+  const ticker = document.querySelector(".wsj-ticker");
+  const tickerH = ticker ? ticker.getBoundingClientRect().height : 0;
+  return Math.round(tickerH + 24); // ticker height + breathing room
+}
+
+function setActiveTOC(href) {
+  tocLinks.forEach(a => a.classList.toggle("active", a.getAttribute("href") === href));
+}
+
+function updateActiveTOC() {
+  if (!sections.length) return;
+
+  // Near top of page, treat Overview as active (masthead sits above it)
+  if (window.scrollY <= 10) {
+    setActiveTOC("#overview");
+    return;
+  }
+
+  const y = window.scrollY + getTopOffset() + 1;
+
+  // Active section = last section whose top is above the offset line
+  let current = sections[0];
+  for (const s of sections) {
+    if (s.offsetTop <= y) current = s;
+  }
+
+  setActiveTOC("#" + current.id);
+}
+
+// Throttle scroll updates with rAF
+let tocTicking = false;
+window.addEventListener("scroll", () => {
+  if (!tocTicking) {
+    requestAnimationFrame(() => {
+      updateActiveTOC();
+      tocTicking = false;
+    });
+    tocTicking = true;
+  }
+});
+
+window.addEventListener("load", updateActiveTOC);
+window.addEventListener("resize", updateActiveTOC);
+
+// Optional: on click, update immediately to avoid a brief “wrong” flash
+tocLinks.forEach(a => {
+  a.addEventListener("click", () => setActiveTOC(a.getAttribute("href")));
+});
+
+  // Run on scroll (throttled by rAF)
+  let ticking = false;
+  window.addEventListener("scroll", () => {
+    if (!ticking) {
+      window.requestAnimationFrame(() => {
+        setActiveByScroll();
+        ticking = false;
       });
-    }, { root: null, threshold: 0.38 });
+      ticking = true;
+    }
+  });
 
-    sections.forEach(s => obs.observe(s));
+  window.addEventListener("load", setActiveByScroll);
+  window.addEventListener("resize", setActiveByScroll);
+
+  // Optional: ensure click sets active immediately (prevents flash)
+  tocLinks.forEach(a => {
+    a.addEventListener("click", () => {
+      tocLinks.forEach(x => x.classList.remove("active"));
+      a.classList.add("active");
+    });
+  });
+    
   </script>
+  
+  
+  <script>
+  function syncTickerOffset(){
+    const t = document.querySelector('.wsj-ticker');
+    if(!t) return;
+    const h = Math.ceil(t.getBoundingClientRect().height);
+    document.documentElement.style.setProperty('--ticker-h', h + 'px');
+  }
+  window.addEventListener('load', syncTickerOffset);
+  window.addEventListener('resize', syncTickerOffset);
+</script>
+  
+  
 </body>
 </html>
