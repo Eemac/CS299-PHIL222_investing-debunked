@@ -119,11 +119,15 @@ tocLinks.forEach(a => {
   window.addEventListener('resize', syncTickerOffset);
 
 
-  window.addEventListener("load", () => {
+window.addEventListener("load", () => {
+  setTimeout(() => {
     const basePath = "./datavisualizations/";
-    vegaEmbed("#viz-embed-1", likertA, {actions:false, renderer:"svg"});
-    vegaEmbed("#viz-embed-2", dumbbellA,   {actions:false, renderer:"svg"});
+
+    vegaEmbed("#viz-embed-1", likertA, { actions: false, renderer: "svg" });
+    vegaEmbed("#viz-embed-2", dumbbellA, { actions: false, renderer: "svg" });
+    vegaEmbed("#viz-embed-3", thirdFigure, { actions: false, renderer: "svg" });
 
     // Then add a line like this here:
-    // vegaEmbed("#viz-embed-2", uniqueVariableName,   {actions:false, renderer:"svg"});
-  });
+    // vegaEmbed("#viz-embed-4", uniqueVariableName, { actions:false, renderer:"svg" });
+  }, 500);
+});

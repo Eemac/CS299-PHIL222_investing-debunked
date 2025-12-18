@@ -549,6 +549,37 @@
       background: rgba(15,17,21,.88);
       color: rgba(255,255,255,.92);
     }
+
+.megabutton {
+  display: flex;
+  justify-content: center; /* horizontal centering */
+}
+
+.megabutton a {
+  display: inline-block;
+  padding: 4vh 10vw;
+  background: #ffffff;
+  color: #000000;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 4vh;
+  margin-bottom: 30px;
+
+  border-radius: 9999px; /* large pill radius */
+  transition: background-color 0.15s ease, color 0.15s ease;
+}
+
+/* Hover: slightly dimmer */
+.megabutton a:hover {
+  background: #f0f0f0;
+}
+
+/* Active (clicked) */
+.megabutton a:active {
+  background: #000000;
+  color: #ffffff;
+}
+
     .tabpanel{
       padding: 14px 16px 16px;
       display:none;
