@@ -1,0 +1,399 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Insight Dashboard Template</title>
+  <link rel="stylesheet" href="style.css">
+
+
+<!-- Vega libraries FIRST (local) -->
+<script src="https://cdn.jsdelivr.net/npm/vega@5"></script>
+<script src="https://cdn.jsdelivr.net/npm/vega-lite@5"></script>
+<script src="https://cdn.jsdelivr.net/npm/vega-embed@6"></script>
+
+
+<!-- IF NEW FILES, COPY THIS -->
+<!-- And then add "var uniqueVariableName = " to the front of your .json, and a semicolon to the end -->
+<script src="./datavisualizations/likert_pre_post_interactive.json"></script>
+<script src="./datavisualizations/dumbbell_pre_post_interactive.json"></script>
+
+</head>
+
+<body>
+  <div id="page-top"></div>
+  
+  <div class="wsj-ticker" role="region" aria-label="Market ticker">
+  <div class="wsj-ticker__mask">
+    <div class="wsj-ticker__track">
+      <span class="wsj-ticker__item down"><b>AURORA FUT</b><i>48,818.00</i><em>-0.04%</em><u>▼</u></span>
+      <span class="wsj-ticker__item down"><b>IRONCAP 500</b><i>6,876.00</i><em>-0.07%</em><u>▼</u></span>
+      <span class="wsj-ticker__item down"><b>NEBULA TECH</b><i>25,308.75</i><em>-0.13%</em><u>▼</u></span>
+      <span class="wsj-ticker__item up"><b>STOXXORA 600</b><i>581.80</i><em>+0.06%</em><u>▲</u></span>
+      <span class="wsj-ticker__dot">•</span>
+      <span class="wsj-ticker__item up"><b>RIVERMINT BK</b><i>1,204.10</i><em>+0.22%</em><u>▲</u></span>
+      <span class="wsj-ticker__item down"><b>SKYLINE OIL</b><i>93.41</i><em>-0.58%</em><u>▼</u></span>
+      <span class="wsj-ticker__item up"><b>LATTICE AI</b><i>312.77</i><em>+1.14%</em><u>▲</u></span>
+      <span class="wsj-ticker__item down"><b>CIRRUS GOLD</b><i>2,044.30</i><em>-0.11%</em><u>▼</u></span>
+      <span class="wsj-ticker__item up"><b>HARBOR FX</b><i>101.92</i><em>+0.03%</em><u>▲</u></span>
+      <span class="wsj-ticker__dot">•</span>
+      <span class="wsj-ticker__item up"><b>POLARIS IND</b><i>8,402.55</i><em>+0.19%</em><u>▲</u></span>
+      <span class="wsj-ticker__item down"><b>EMBER RETAIL</b><i>144.09</i><em>-0.35%</em><u>▼</u></span>
+      <span class="wsj-ticker__item up"><b>QUANTUM RAIL</b><i>77.61</i><em>+0.41%</em><u>▲</u></span>
+    </div>
+
+    <!-- Duplicate for seamless loop -->
+    <div class="wsj-ticker__track" aria-hidden="true">
+      <span class="wsj-ticker__item down"><b>AURORA FUT</b><i>48,818.00</i><em>-0.04%</em><u>▼</u></span>
+      <span class="wsj-ticker__item down"><b>IRONCAP 500</b><i>6,876.00</i><em>-0.07%</em><u>▼</u></span>
+      <span class="wsj-ticker__item down"><b>NEBULA TECH</b><i>25,308.75</i><em>-0.13%</em><u>▼</u></span>
+      <span class="wsj-ticker__item up"><b>STOXXORA 600</b><i>581.80</i><em>+0.06%</em><u>▲</u></span>
+      <span class="wsj-ticker__dot">•</span>
+      <span class="wsj-ticker__item up"><b>RIVERMINT BK</b><i>1,204.10</i><em>+0.22%</em><u>▲</u></span>
+      <span class="wsj-ticker__item down"><b>SKYLINE OIL</b><i>93.41</i><em>-0.58%</em><u>▼</u></span>
+      <span class="wsj-ticker__item up"><b>LATTICE AI</b><i>312.77</i><em>+1.14%</em><u>▲</u></span>
+      <span class="wsj-ticker__item down"><b>CIRRUS GOLD</b><i>2,044.30</i><em>-0.11%</em><u>▼</u></span>
+      <span class="wsj-ticker__item up"><b>HARBOR FX</b><i>101.92</i><em>+0.03%</em><u>▲</u></span>
+      <span class="wsj-ticker__dot">•</span>
+      <span class="wsj-ticker__item up"><b>POLARIS IND</b><i>8,402.55</i><em>+0.19%</em><u>▲</u></span>
+      <span class="wsj-ticker__item down"><b>EMBER RETAIL</b><i>144.09</i><em>-0.35%</em><u>▼</u></span>
+      <span class="wsj-ticker__item up"><b>QUANTUM RAIL</b><i>77.61</i><em>+0.41%</em><u>▲</u></span>
+    </div>
+  </div>
+</div>
+  
+  <div class="app">
+
+      <!-- Separate title block (same dimensions as main) -->
+      <header class="main masthead">
+        <h1 class="page-title">
+          <span class="page-title__kicker">Final Project</span>
+
+          <span class="page-title__main">
+            Investment Chatbot
+          </span>
+
+          <span class="page-title__byline">Created by Nita Kelly, Ian Walsh, and Rori Li</span>
+        </h1>
+      </header>
+
+        <!-- Main paper -->
+      <main class="main">
+        
+      <!-- SECTION: Overview -->
+        <!-- <section id="overview">
+          <div class="kpi-band">
+            <div class="left">
+              <div style="display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap;">
+                <div class="pill"><strong>Your Saving</strong> <span class="meta">Edit</span></div>
+
+                <div class="toggle">
+                  ROUND UP
+                  <label class="switch" aria-label="Round up toggle">
+                    <input type="checkbox" checked />
+                    <span class="knob"></span>
+                  </label>
+                </div>
+              </div>
+
+              <div class="progress" aria-label="Progress bars">
+                <div class="progress-row">
+                  <div>This Week</div>
+                  <div class="bar"><span style="width:74%"></span></div>
+                </div>
+                <div class="progress-row">
+                  <div>This Month</div>
+                  <div class="bar"><span style="width:66%"></span></div>
+                </div>
+                <div class="progress-row">
+                  <div>This Year</div>
+                  <div class="bar"><span style="width:83%"></span></div>
+                </div>
+              </div>
+            </div>
+
+            <div style="display:grid; gap:10px; justify-items:end;">
+              <div class="kpi-big">+18.4%</div>
+              <div class="meta">Change vs previous period</div>
+            </div>
+          </div>
+        </section> -->
+
+      <!-- SECTION: Panels -->
+      <section id="panels" aria-label="Panels">
+        <div class="grid kpi" style="margin-top:16px;">
+          <!-- Growth tile -->
+          <article class="tile tile-olive">
+            <div class="inner">
+              <!-- Tabs for paragraph inputs -->
+              <!-- <div class="tabs" aria-label="Narrative tabs"> -->
+                <div class="tabbar" role="tablist" aria-label="Toggle paragraph sets">
+                  <button class="active" type="button" data-tab="t1">Our Research Question</button>
+                  <button type="button" data-tab="t2">Scope and Focus</button>
+                  <button type="button" data-tab="t3">Research Expections and Findings</button>
+                </div>
+
+                <div class="tabpanel active" id="t1" role="tabpanel">
+                  <div class="meta">Investing is often compared by naysayers to gambling. Pick the right stock at the right time, and one can build a comfortable life. The wrong one at the wrong time? Savings gone in the blink of an eye. With the right set of instructions, though, the risks of losing it all can be successfully mitigated. There have been hundreds of books written on the ‘right way’ to invest and a seemingly endless stream of personalities shouting their personal strategies, solutions, successes. <br> <br>Though there is undoubtedly a great wealth of information available, new investors can often feel overwhelmed and unsure where to start. Horror stories from friends, family, and others online can perpetuate the myth that eventually, everyone will make a bad call, lose money, and fall into a state of financial ruin. For college students with limited resources–often the first substantial resources they have ever earned thanks to internships or on-campus jobs–owning anything other than a savings account can cause undue stress. Finding a source of truth that gives some advice and helps break down basic investing concepts is an incredibly important first step to building a strong and stable financial future. For some students, this is a parent or a close family friend with experience. For those without access to that kind of mentor, finding a way to easily break down complex topics or get personalized, conversational advice is difficult. Enter Gemini, a generative AI chatbot. By building a ‘Gemini Gem,’ a customised module with custom instructions to help newbie users, citing any advice from a selection of pre-selected, trustworthy sources. </div>
+                </div>
+
+                <div class="tabpanel" id="t2" role="tabpanel">
+                  <div class="meta">The Gem started with an extremely narrow focus: to dispel and only dispel the myth that investing will eventually tend to ruin unless the investor is a financial genius. Based on a few key sources written by industry professionals, the bot advised users to research low-risk stocks and bonds for a stable, albeit low positive return on their money. As people tested the system, they found they were quickly running out of the pre-programmed bounds that had been set. The system scope was adjusted accordingly to include information on basic savings, low yield, and retirement accounts like a 401k and Roth IRA.</div>
+                </div>
+
+                <div class="tabpanel" id="t3" role="tabpanel">
+                  <div class="meta">User testing that included probative surveys before and after a subject interacted with the AI showed that tool usage slightly reduces confusion and misinformation around financial basics, with the largest complaint being the aforementioned hard limits that were imposed. The testing process also attempted to evaluate whether grounding advice in a set of pre-selected, reputable sources helped establish trust and credibility. It was important to address common skepticism around AI-generated guidance. The chatbot was prompted explicitly list sources for any piece of advice or fact given. Users found this interaction to be a highlight, and several commented they felt more comfortable and trusting of the Gem.</div>
+                </div>
+              <!-- </div> -->
+            </div>
+          </article>
+
+          <!-- Engagement tile -->
+          <article class="tile tile-lilac">
+            <div class="inner">
+              <div class="toolbar">
+                <strong>Insert statistic genre</strong>
+                <span class="badge">December 2025 ▸</span>
+              </div>
+
+              <div style="display:flex; align-items:baseline; gap:10px; flex-wrap:wrap;">
+                <div style="font-size:2.2rem; font-weight:900; letter-spacing:-.8px;">+17.43%</div>
+                <div class="meta">Compared to last year</div>
+              </div>
+
+              <div class="viz" id="viz-engagement" style="min-height: 220px;">
+                <div>Chart placeholder (Engagement)</div>
+              </div>
+
+              <div class="meta">Tip: use this space for a stacked bar, sparkline, or cohort plot.</div>
+            </div>
+          </article>
+
+          <!-- Account tile -->
+          <article class="tile tile-coral">
+            <div class="inner">
+              <div class="toolbar">
+                <strong>Account</strong>
+                <span class="badge">Controls</span>
+              </div>
+
+              <div style="display:grid; gap:10px;">
+                <button class="cap" type="button" style="justify-content:space-between; color: rgba(15,17,21,.92); background: rgba(255,255,255,.18); border-color: rgba(15,17,21,.16);">
+                  💡 Learn <span>›</span>
+                </button>
+                <button class="cap" type="button" style="justify-content:space-between; color: rgba(15,17,21,.92); background: rgba(255,255,255,.18); border-color: rgba(15,17,21,.16);">
+                  🔗 Refer a Friend <span>›</span>
+                </button>
+                <button class="cap" type="button" style="justify-content:space-between; color: rgba(15,17,21,.92); background: rgba(255,255,255,.18); border-color: rgba(15,17,21,.16);">
+                  📈 Activity <span>›</span>
+                </button>
+                <button class="cap" type="button" style="justify-content:space-between; color: rgba(15,17,21,.92); background: rgba(255,255,255,.18); border-color: rgba(15,17,21,.16);">
+                  👤 Account <span>›</span>
+                </button>
+                <button class="cap" type="button" style="justify-content:space-between; color: rgba(15,17,21,.92); background: rgba(255,255,255,.18); border-color: rgba(15,17,21,.16);">
+                  ⇄ Transfer <span>›</span>
+                </button>
+                <button class="cap" type="button" style="justify-content:space-between; color: rgba(15,17,21,.92); background: rgba(255,255,255,.18); border-color: rgba(15,17,21,.16);">
+                  ❓ Help <span>›</span>
+                </button>
+              </div>
+
+              <button type="button" class="cap" style="margin-top:auto; justify-content:center; gap:10px; font-weight:800; background: rgba(15,17,21,.88); border-color: rgba(15,17,21,.40); color: rgba(255,255,255,.95);">
+                Log Out
+              </button>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <!-- SECTION: Visualizations -->
+        
+        
+      <section id="visualizations">
+        <div class="grid viz-grid" style="grid-template-columns: 1fr; gap:16px;">
+  
+          <!-- Viz Card 1 (Primary) -->
+          <article class="card card--viz-primary">
+            <div class="inner">
+              <h2>Primary Visualization</h2>
+              <div class="meta">Pre vs Post Likert distribution • drag to pan, scroll to zoom • hover for details.</div>
+
+              <!-- Vega-Embed mount -->
+              <figure class="viz viz--vega" style="min-height: 320px;">
+                <div id="viz-embed-1" style="width:100%; height:100%;"></div>
+              </figure>
+
+              <!-- Caption -->
+              <div class="meta viz-caption">
+                <strong>Caption:</strong> Replace this with your interpretation (1–2 sentences) and the key takeaway.
+              </div>
+            </div>
+          </article>
+
+          <!-- Viz Card 2 (Secondary) -->
+          <article class="card card--viz-secondary">
+            <div class="inner">
+              <h2>Secondary Visualization</h2>
+              <div class="meta">Companion chart • same interactions • use for comparison or breakdown.</div>
+
+              <!-- Vega-Embed mount -->
+              <figure class="viz viz--vega" style="min-height: 320px;">
+                <div id="viz-embed-2" style="width:100%; height:100%;"></div>
+              </figure>
+
+              <!-- Caption -->
+              <div class="meta viz-caption">
+                <strong>Caption:</strong> Add a short caption explaining what changed and why it matters.
+              </div>
+            </div>
+          </article>
+
+        </div>
+      </section>
+
+      <!-- SECTION: Narrative Inputs -->
+      <section id="narrative">
+        <div class="inputs">
+          <!-- Accordion paragraphs (toggle menus to input paragraphs) -->
+          <div class="accordion" aria-label="Narrative inputs accordion">
+            <div class="acc-item">
+              <button class="acc-head" type="button" data-acc="a1">
+                Executive Summary <span>toggle ▾</span>
+              </button>
+              <div class="acc-panel open" id="a1">
+                <textarea placeholder="Write your executive summary paragraph(s) here…"></textarea>
+              </div>
+            </div>
+
+            <div class="acc-item">
+              <button class="acc-head" type="button" data-acc="a2">
+                Methodology <span>toggle ▾</span>
+              </button>
+              <div class="acc-panel" id="a2">
+                <textarea placeholder="Describe data sources, transformations, and assumptions…"></textarea>
+              </div>
+            </div>
+
+            <div class="acc-item">
+              <button class="acc-head" type="button" data-acc="a3">
+                Findings & Interpretation <span>toggle ▾</span>
+              </button>
+              <div class="acc-panel" id="a3">
+                <textarea placeholder="Explain what the charts mean and why it matters…"></textarea>
+              </div>
+            </div>
+
+            <div class="acc-item">
+              <button class="acc-head" type="button" data-acc="a4">
+                Risks / Limitations <span>toggle ▾</span>
+              </button>
+              <div class="acc-panel" id="a4">
+                <textarea placeholder="Add caveats, known gaps, uncertainty ranges…"></textarea>
+              </div>
+            </div>
+          </div>
+
+          <!-- Tabs for paragraph inputs -->
+          <div class="tabs" aria-label="Narrative tabs">
+            <div class="tabbar" role="tablist" aria-label="Toggle paragraph sets">
+              <button class="active" type="button" data-tab="t1">Notes</button>
+              <button type="button" data-tab="t2">Actions</button>
+              <button type="button" data-tab="t3">Appendix</button>
+            </div>
+
+            <div class="tabpanel active" id="t1" role="tabpanel">
+              <div class="meta">Quick notes (short, punchy, like dashboard annotations).</div>
+              <textarea placeholder="Add analyst notes, callouts, and chart annotations…"></textarea>
+            </div>
+
+            <div class="tabpanel" id="t2" role="tabpanel">
+              <div class="meta">Recommended actions (bullets or paragraphs).</div>
+              <textarea placeholder="Add action items, owners, and next steps…"></textarea>
+            </div>
+
+            <div class="tabpanel" id="t3" role="tabpanel">
+              <div class="meta">Appendix (definitions, query snippets, etc.).</div>
+              <textarea placeholder="Add definitions, formulas, or links to notebooks…"></textarea>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SECTION: Wallet / List (dark, minimal, like crypto list) -->
+      <section id="wallet">
+        <div class="wallet">
+          <div class="head">
+            <h2>Wallet</h2>
+            <div class="badge">Live snapshot • placeholders</div>
+          </div>
+
+          <table aria-label="Wallet table">
+            <thead>
+              <tr>
+                <th>Asset</th>
+                <th class="sub">Ticker</th>
+                <th class="sub">24h</th>
+                <th style="text-align:right;">Value</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Bitcoin</td>
+                <td class="sub">BTC</td>
+                <td class="sub">+1.66%</td>
+                <td style="text-align:right;">£40,535</td>
+              </tr>
+              <tr>
+                <td>Ethereum</td>
+                <td class="sub">ETH</td>
+                <td class="sub">-1.57%</td>
+                <td style="text-align:right;">£2,334</td>
+              </tr>
+              <tr>
+                <td>Tether</td>
+                <td class="sub">USDT</td>
+                <td class="sub">+0.09%</td>
+                <td style="text-align:right;">£1,893</td>
+              </tr>
+              <tr>
+                <td>Cardano</td>
+                <td class="sub">ADA</td>
+                <td class="sub">-0.44%</td>
+                <td style="text-align:right;">£899</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- SECTION: References -->
+      <section id="references">
+        <footer>
+          <h2>References</h2>
+          <ol class="refs">
+            <li><a href="#" rel="noopener">Data Source A</a> — description of dataset, access date.</li>
+            <li><a href="#" rel="noopener">Method Paper / Documentation</a> — model or metric definition.</li>
+            <li><a href="#" rel="noopener">Dashboard Spec</a> — internal requirements, versioning info.</li>
+          </ol>
+        </footer>
+      </section>
+    </main>
+
+    <!-- Floating TOC -->
+    <nav class="toc" aria-label="Table of contents">
+      <h3>Contents</h3>
+      <a href="#overview">01 — Overview</a>
+      <a href="#panels">02 — Panels</a>
+      <a href="#visualizations">03 — Visualizations</a>
+      <a href="#narrative">04 — Narrative Inputs</a>
+      <a href="#wallet">05 — Wallet / List</a>
+      <a href="#references">06 — References</a>
+      <a href="#top" style="margin-top:6px; opacity:.8;">↑ Back to top</a>
+    </nav>
+  </div>
+
+  <script src="./scripts.js"></script>
+
+  
+</body>
+</html>
