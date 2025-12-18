@@ -240,7 +240,7 @@
       gap: 16px;
     }
     .grid.kpi{
-      grid-template-columns: 1.35fr 1fr 1fr;
+      grid-template-columns: 1fr;
       align-items:stretch;
     }
     .card{
@@ -263,9 +263,9 @@
       position:relative;
       padding: 16px;
       display:flex;
-      flex-direction:column;
+      flex-direction:row;
       gap: 12px;
-      height:100%;
+      width:100%;
     }
     .card h2{
       margin:0;
@@ -286,7 +286,7 @@
       border: 1px solid rgba(15,17,21,.10);
       padding: 18px;
       display:grid;
-      grid-template-columns: 1fr auto;
+      grid-template-columns: 1fr;
       gap: 18px;
       align-items:center;
       color: var(--ink);
@@ -370,9 +370,14 @@
 
     /* Accent tiles (olive / lilac / coral like your mockups) */
     .tile-olive{ background: linear-gradient(180deg, rgba(169,173,29,.95), rgba(169,173,29,.78)); }
-    .tile-lilac{ background: linear-gradient(180deg, rgba(154,146,183,.95), rgba(154,146,183,.80)); }
+    .inner-olive{ background: rgba(178, 181, 52, 0.95); border-radius: var(--radius-xl)}
+    .tile-lilac{ background: linear-gradient(180deg, rgba(164,157,190,0.95), rgba(154,146,183,.80)); }
+    .inner-lilac{ background: rgba(180, 173, 209, 0.95); border-radius: var(--radius-xl)}
     .tile-coral{ background: linear-gradient(180deg, rgba(255,107,85,.96), rgba(255,107,85,.82)); }
+    .inner-coral{ background: rgba(255, 122, 102, 0.96); border-radius: var(--radius-xl)}
     .tile-cream{ background: linear-gradient(180deg, rgba(244,242,234,.96), rgba(244,242,234,.86)); }
+
+    .caption {font-size: 0.8rem; font-family: var(--mono); text-align: center; margin-top: -10px;}
 
     .tile{
       color: rgba(15,17,21,.92);
@@ -382,6 +387,7 @@
       overflow:hidden;
       position:relative;
     }
+
     .tile .inner{ padding: 16px; display:flex; flex-direction:column; gap: 12px; height:100%; position:relative; }
     .tile h3{ margin:0; font-size: 1.02rem; }
     .tile p{ margin:0; color: rgba(15,17,21,.66); font-size:.92rem; }
