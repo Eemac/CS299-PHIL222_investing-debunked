@@ -1360,16 +1360,20 @@ tocLinks.forEach(a => {
   
   
 <!-- Vega libraries FIRST (local) -->
-<script src="./vendor/vega.min.js"></script>
-<script src="./vendor/vega-lite.min.js"></script>
-<script src="./vendor/vega-embed.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vega@5"></script>
+<script src="https://cdn.jsdelivr.net/npm/vega-lite@5"></script>
+<script src="https://cdn.jsdelivr.net/npm/vega-embed@6"></script>
+
+<script src="./datavisualizations/likert_pre_post_interactive.json"></script>
+<script src="./datavisualizations/dumbbell_pre_post_interactive.json"></script>
+
 
 <!-- THEN your embed code -->
 <script>
   window.addEventListener("load", () => {
     const basePath = "./datavisualizations/";
-    vegaEmbed("#viz-embed-1", basePath + "dumbbell_pre_post_interactive.json", {actions:false, renderer:"svg"});
-    vegaEmbed("#viz-embed-2", basePath + "likert_pre_post_interactive.json",   {actions:false, renderer:"svg"});
+    vegaEmbed("#viz-embed-1", likertA, {actions:false, renderer:"svg"});
+    vegaEmbed("#viz-embed-2", dumbbellA,   {actions:false, renderer:"svg"});
   });
 </script>
   
