@@ -1048,45 +1048,44 @@ body{ scroll-padding-top: 64px; }
 
       <!-- SECTION: Visualizations -->
       <section id="visualizations">
-        <div class="grid" style="grid-template-columns: 1.4fr 1fr; gap:16px;">
-          <article class="card">
+        <div class="grid viz-grid" style="grid-template-columns: 1fr; gap:16px;">
+  
+          <!-- Viz Card 1 (Primary) -->
+          <article class="card card--viz-primary">
             <div class="inner">
               <h2>Primary Visualization</h2>
-              <div class="meta">A wide canvas for your main chart (bubble timeline / distribution / trend).</div>
-              <div class="viz" style="min-height: 320px;">
-                <div>Main chart placeholder (e.g., bubble timeline)</div>
-              </div>
+              <div class="meta">Pre vs Post Likert distribution • drag to pan, scroll to zoom • hover for details.</div>
 
-              <div class="findings">
-                <div class="stat">
-                  <div class="label">Key Metric A</div>
-                  <div class="value">0.84</div>
-                  <div class="delta">+0.08</div>
-                </div>
-                <div class="stat">
-                  <div class="label">Key Metric B</div>
-                  <div class="value">72%</div>
-                  <div class="delta">-3.1%</div>
-                </div>
-                <div class="stat">
-                  <div class="label">Key Metric C</div>
-                  <div class="value">14.2k</div>
-                  <div class="delta">+6.5%</div>
-                </div>
+              <!-- Vega-Embed mount -->
+              <figure class="viz viz--vega" style="min-height: 320px;">
+                <div id="viz-embed-1" style="width:100%; height:100%;"></div>
+              </figure>
+
+              <!-- Caption -->
+              <div class="meta viz-caption">
+                <strong>Caption:</strong> Replace this with your interpretation (1–2 sentences) and the key takeaway.
               </div>
             </div>
           </article>
 
-          <article class="card">
+          <!-- Viz Card 2 (Secondary) -->
+          <article class="card card--viz-secondary">
             <div class="inner">
               <h2>Secondary Visualization</h2>
-              <div class="meta">Use for comparisons, forecasts, or breakdowns.</div>
-              <div class="viz" style="min-height: 320px;">
-                <div>Secondary chart placeholder</div>
+              <div class="meta">Companion chart • same interactions • use for comparison or breakdown.</div>
+
+              <!-- Vega-Embed mount -->
+              <figure class="viz viz--vega" style="min-height: 320px;">
+                <div id="viz-embed-2" style="width:100%; height:100%;"></div>
+              </figure>
+
+              <!-- Caption -->
+              <div class="meta viz-caption">
+                <strong>Caption:</strong> Add a short caption explaining what changed and why it matters.
               </div>
-              <div class="meta">Swap this for a table, heatmap, or KPI ladder.</div>
             </div>
           </article>
+
         </div>
       </section>
 
@@ -1357,6 +1356,35 @@ tocLinks.forEach(a => {
   window.addEventListener('resize', syncTickerOffset);
 </script>
   
+ <!-- for the data visualization json files -->
+<script src="https://cdn.jsdelivr.net/npm/vega@5"></script>
+<script src="https://cdn.jsdelivr.net/npm/vega-lite@5"></script>
+<script src="https://cdn.jsdelivr.net/npm/vega-embed@6"></script>
+  
+ <script>
+  (function () {
+    const basePath = "./datavisualizations/";
+    const charts = [
+      {
+        el: "#viz-embed-1",
+        spec: basePath + "dumbbell_pre_post_interactive.json"
+      },
+      {
+        el: "#viz-embed-2",
+        spec: basePath + "likert_pre_post_interactive.json"
+      }
+    ];
+    const embedOptions = {
+      actions: false,     // hides Vega menu
+      renderer: "svg"     // crisp, matches your UI
+    };
+    charts.forEach(c => {
+      vegaEmbed(c.el, c.spec, embedOptions).catch(err => {
+        console.error("Vega embed failed:", c.spec, err);
+      });
+    });
+  })();
+</script>
   
 </body>
 </html>
