@@ -8,25 +8,25 @@
       });
     });
 
-    // ===== Tabs =====
-    const tabButtons = document.querySelectorAll(".tabbar button");
-    const tabPanels  = document.querySelectorAll(".tabpanel");
-    tabButtons.forEach(b => b.addEventListener("click", () => {
-      tabButtons.forEach(x => x.classList.remove("active"));
-      b.classList.add("active");
-      const id = b.getAttribute("data-tab");
-      tabPanels.forEach(p => p.classList.toggle("active", p.id === id));
-    }));
+// ===== Tabs (scoped per article) =====
+document.querySelectorAll("article.tile").forEach(article => {
+  const tabButtons = article.querySelectorAll(".tabbar button");
+  const tabPanels  = article.querySelectorAll(".tabpanel");
 
-    // ===== Segmented control (visual only) =====
-    document.querySelectorAll(".segmented").forEach(seg => {
-      seg.querySelectorAll("button").forEach(btn => {
-        btn.addEventListener("click", () => {
-          seg.querySelectorAll("button").forEach(x => x.classList.remove("active"));
-          btn.classList.add("active");
-        });
-      });
+  tabButtons.forEach(btn => {
+    btn.addEventListener("click", () => {
+      // deactivate only this article's tabs
+      tabButtons.forEach(b => b.classList.remove("active"));
+      tabPanels.forEach(p => p.classList.remove("active"));
+
+      // activate selected tab
+      btn.classList.add("active");
+      const id = btn.getAttribute("data-tab");
+      const panel = article.querySelector("#" + id);
+      if (panel) panel.classList.add("active");
     });
+  });
+});
 
 // ===== Floating TOC active section highlight (stable, consolidated) =====
 const tocLinks = Array.from(document.querySelectorAll(".toc a[href^='#']"))
