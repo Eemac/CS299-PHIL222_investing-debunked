@@ -1047,6 +1047,8 @@ body{ scroll-padding-top: 64px; }
       </section>
 
       <!-- SECTION: Visualizations -->
+        
+        
       <section id="visualizations">
         <div class="grid viz-grid" style="grid-template-columns: 1fr; gap:16px;">
   
@@ -1356,34 +1358,19 @@ tocLinks.forEach(a => {
   window.addEventListener('resize', syncTickerOffset);
 </script>
   
- <!-- for the data visualization json files -->
-<script src="https://cdn.jsdelivr.net/npm/vega@5"></script>
-<script src="https://cdn.jsdelivr.net/npm/vega-lite@5"></script>
-<script src="https://cdn.jsdelivr.net/npm/vega-embed@6"></script>
   
- <script>
-  (function () {
+<!-- Vega libraries FIRST (local) -->
+<script src="./vendor/vega.min.js"></script>
+<script src="./vendor/vega-lite.min.js"></script>
+<script src="./vendor/vega-embed.min.js"></script>
+
+<!-- THEN your embed code -->
+<script>
+  window.addEventListener("load", () => {
     const basePath = "./datavisualizations/";
-    const charts = [
-      {
-        el: "#viz-embed-1",
-        spec: basePath + "dumbbell_pre_post_interactive.json"
-      },
-      {
-        el: "#viz-embed-2",
-        spec: basePath + "likert_pre_post_interactive.json"
-      }
-    ];
-    const embedOptions = {
-      actions: false,     // hides Vega menu
-      renderer: "svg"     // crisp, matches your UI
-    };
-    charts.forEach(c => {
-      vegaEmbed(c.el, c.spec, embedOptions).catch(err => {
-        console.error("Vega embed failed:", c.spec, err);
-      });
-    });
-  })();
+    vegaEmbed("#viz-embed-1", basePath + "dumbbell_pre_post_interactive.json", {actions:false, renderer:"svg"});
+    vegaEmbed("#viz-embed-2", basePath + "likert_pre_post_interactive.json",   {actions:false, renderer:"svg"});
+  });
 </script>
   
 </body>
