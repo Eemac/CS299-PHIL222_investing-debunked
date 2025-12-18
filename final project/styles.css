@@ -17,3 +17,49 @@
 .html{
   scroll-behavior: smooth;
 }
+
+
+/* Vega embeds: make them feel native */
+.viz--vega{
+  border: 1px solid rgba(15,17,21,.14);
+  border-radius: 18px;
+  background: rgba(255,255,255,.35);
+  overflow: hidden;
+  padding: 10px;               /* gives the chart breathing room */
+}
+
+/* Fill container cleanly */
+.viz--vega .vega-embed,
+.viz--vega .vega-embed > div,
+.viz--vega canvas,
+.viz--vega svg{
+  width: 100% !important;
+  height: 100% !important;
+  display: block;
+}
+
+/* Hide Vega action links */
+.viz--vega .vega-actions{ display:none !important; }
+
+/* Caption spacing */
+.viz-caption{
+  margin-top: 6px;
+  line-height: 1.35;
+}
+
+/* === Visualization card background overrides === */
+.card--viz-primary{
+  background: linear-gradient(
+    180deg,
+    color-mix(in srgb, var(--tile-coral) 25%, white),
+    rgba(233,239,233,.90)
+  );
+}
+
+.card--viz-secondary{
+  background: linear-gradient(
+    180deg,
+    color-mix(in srgb, var(--tile-lilac) 35%, white),
+    rgba(233,239,233,.90)
+  );
+}
