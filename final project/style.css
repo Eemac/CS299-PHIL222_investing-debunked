@@ -57,7 +57,7 @@
     padding-top: var(--ui-gap); /* ticker already handles its own sticky space */
     padding-right: calc(var(--ui-gap) * 2 + min(var(--toc-w), 28vw));
   }
-    }
+  
 
     /* Left icon rail (inspired by “Account / Wallet” UI) */
     .rail{
