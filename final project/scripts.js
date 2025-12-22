@@ -131,3 +131,7 @@ window.addEventListener("load", () => {
     // vegaEmbed("#viz-embed-4", uniqueVariableName, { actions:false, renderer:"svg" });
   }, 500);
 });
+
+vegaEmbed("#viz-embed-1", "datavisualizations/chart1.json", { actions:false });
+vegaEmbed("#viz-embed-2", "datavisualizations/chart2.json", { actions:false });
+vegaEmbed("#viz-embed-3", "datavisualizations/genai_likert_chart.json", { actions:false });
